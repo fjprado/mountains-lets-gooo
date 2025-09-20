@@ -1,38 +1,39 @@
 let cypressDetails = {};
 
-const fetchCypressDetails = async () => {    
-    const apiResponse = await fetch('https://www.onthesnow.com/_next/data/2.8.5_en-US/british-columbia/cypress-mountain/ski-resort.json?region=british-columbia&resort=cypress-mountain');
-    cypressData = (await apiResponse.json()).pageProps.fullResort;
-
-    cypressDetails = {
-        image: cypressData.smallImage,
-        video: "https://www.youtube.com/embed/OSKgIDnBwwQ", 
-        snow: {
-            last24: 0,
-            last48: 0,
-            last72: 0
-        },
-        runsOpen: cypressData.runs.open,  
-        runsOpenPercent: cypressData.runs.openPercent, 
-        openingDate: cypressData.status.openingDate,
-        daysForOpening: (Date.now() - new Date(cypressData.status.openingDate).getTime()) > 0 ? 0 : Math.ceil((new Date(cypressData.status.openingDate).getTime() - Date.now()) / (1000 * 60 * 60 * 24)),
-        closingDate: cypressData.status.closingDate,
-        lastUpdate: cypressData.updatedAt,
-        currentWeather: {
-            wind: cypressData.currentWeather.wind,
-            snow: cypressData.currentWeather.snow,
-            baseTemperature: 
-                { 
-                    min: cypressData.currentWeather.base.min, 
-                    max: cypressData.currentWeather.base.max
-                },
-            type: cypressData.currentWeather.type,
-        },
-        forecast: cypressData.forecast.map(day => ({
-            date: day.date, 
-            snow: day.snow,
-        }))
-    };
+const fetchCypressDetails = async () => {
+    //const response = await fetch('https://mountains-lets-gooo-api.onrender.com/api/cypress-data');
+    //cypressDetails = await response.json();
+    cypressDetails = cypressDataJson;
+    updateUI();
 }
+
+const updateUI = () => {
+    // Set background color based on weather type
+    const body = document.body;
+    switch (cypressDetails.currentWeather.type) {
+        case 'clear-day':
+            body.style.backgroundColor = 'yellow';
+            break;
+        case 'clear-night':
+        case 'partly-cloudy-night':
+            body.style.backgroundColor = 'black';
+            break;            
+        case 'partly-cloudy-day':
+            body.style.backgroundColor = 'lightblue';
+            break;
+        case 'rain':
+        case 'sleet':
+            body.style.backgroundColor = 'white';
+            break;
+        case 'cloudy':
+        case 'snow':            
+        case 'wind':
+        case 'fog':
+            body.style.backgroundColor = 'lightgray';
+            break;
+        default:
+            body.style.backgroundColor = 'lightblue'; // Default background
+    }
+};
 
 fetchCypressDetails();

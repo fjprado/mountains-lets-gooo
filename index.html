@@ -1,42 +1,208 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <!-- Links -->
+    <title>Mountain, let's gooo!</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
     <link rel="stylesheet" href="./css/style.css">
-
-    <!-- Main JS -->
-    <script defer src="./js/script.js"></script>
-
-    <title>Mountans, Let's Gooo!</title>
+    <link rel="icon" type="image/png" href="./images/splash.png">
 </head>
-<body>
-    <main> 
-        <div class="header">
-            <img src="./images/cypress-image.jpg" alt="cypress" class="cypress__image"> 
-        </div>        
-        
-        <h1 class="daysForOpening">
-            <span class="daysForOpening__days">&ensp;</span>
-            <span class="daysForOpening__forOpening">&ensp;</span>
-            <span class="daysForOpening__openingDate">&ensp;</span>
-        </h1> 
-        <div class="content_container">         
-            <div id="info__lore" class="content__info">
-                <p class="content__info__text">Snow</p>    
+
+<body class="bg-gray-50 font-sans">
+    <!-- Header -->
+    <header class="bg-blue-400 shadow-md">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex flex-col md:flex-row justify-between items-center ">
+                <h1 class="text-2xl font-bold text-white">BORAAA PRA MONTANHAAA</h1>
+                <div class="flex items-center space-x-2">
+                    <span class="text-xs text-gray-700">Last updated: <span id="lastUpdate">2025-09-18</span></span>
+                    <button class="p-2 rounded-full bg-blue-100 text-blue-500">
+                        <i data-feather="refresh-cw"></i>
+                    </button>
+                </div>
             </div>
-            <div id="info__lore" class="content__info">
-                <p class="content__info__text">Current Weather</p>    
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-4">
+        <!-- Countdown to Opening -->
+        <div class="countdown p-2 rounded-xl shadow-md mb-3" data-aos="fade-left">
+            <div class="flex flex-col md:flex-row items-center justify-between">
+                <div class="flex flex-col items-center mb-0">
+                    <h2 class="text-lg font-bold text-gray-800">Opening Day Countdown</h2>
+                    <span class="text-sm text-gray-600">November 28, 2025</span>
+                </div>
+                <div class="text-center">
+                    <p class="text-3xl font-bold text-red-600">71</p>
+                    <p class="text-md text-gray-700">days to go!</p>
+                </div>
             </div>
-            <div id="info__lore" class="content__info">
-                <p class="content__info__text">Forecast</p>    
+        </div>
+
+        <!-- Current Status Banner -->
+        <div class="bg-white rounded-xl shadow-md overflow-hidden mb-3" data-aos="fade-right">
+            <div class="p-4">
+                <div class="flex flex-col md:flex-row items-center justify-between">
+                    <div class="flex items-center mb-4 md:mb-0">
+                        <div class="mr-5">
+                            <img src="https://feed-icons-dbgxg7hrccgddubp.a03.azurefd.net/Weather/fa/partly-cloudy-night.svg"
+                                alt="Weather icon" class="w-16 h-16">
+                        </div>
+                        <div>
+                            <h2 class="text-lg font-bold text-gray-800">Current Conditions</h2>
+                            <p class="text-gray-600">Partly cloudy, 15.4°C</p>
+                            <p class="text-gray-600">Wind: 11.7 km/h</p>
+                        </div>
+                    </div>
+                    <div class="bg-red-100 text-red-800 px-6 py-3 rounded-lg">
+                        <div class="flex items-center">
+                            <i data-feather="alert-circle" class="mr-2"></i>
+                            <span class="font-bold">Uphill Status: Closed</span>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div id="info__lore" class="content__info">
-                <p class="content__info__text">Runs</p>    
+        </div>
+
+        <!-- Runs Info -->
+        <div class="bg-white rounded-xl shadow-md overflow-hidden mb-6" data-aos="fade-up">
+            <div class="p-4">
+                <h2 class="text-lg font-bold text-gray-800 mb-4 text-center">Runs Information</h2>
+                <div class="flex flex-col md:flex-row items-center">
+                    <div class="w-full bg-gray-200 rounded-full h-4">
+                        <div class="bg-blue-500 h-4 rounded-full" style="width: 0%"></div>
+                    </div>
+                    <span class="mt-2 md:mt-0 md:ml-4 text-gray-700 font-bold">0% Open (0 runs)</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Snow Stats -->
+        <h2 class="text-xl text-center font-bold text-gray-800 mb-4" data-aos="fade-up">Snow Stats</h2>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+            <div class="snow-stats p-6 rounded-xl shadow-md text-center" data-aos="fade-right">
+                <h3 class="text-lg font-semibold text-gray-700 mb-2">Overnight</h3>
+                <p class="text-3xl font-bold text-blue-500">0 cm</p>
+            </div>
+            <div class="snow-stats p-6 rounded-xl shadow-md text-center" data-aos="fade-left" data-aos-delay="100">
+                <h3 class="text-lg font-semibold text-gray-700 mb-2">Last 24h</h3>
+                <p class="text-3xl font-bold text-blue-500">0 cm</p>
+            </div>
+            <div class="snow-stats p-6 rounded-xl shadow-md text-center" data-aos="fade-right" data-aos-delay="200">
+                <h3 class="text-lg font-semibold text-gray-700 mb-2">Last 48h</h3>
+                <p class="text-3xl font-bold text-blue-500">0 cm</p>
+            </div>
+            <div class="snow-stats p-6 rounded-xl shadow-md text-center" data-aos="fade-left" data-aos-delay="300">
+                <h3 class="text-lg font-semibold text-gray-700 mb-2">Last 72h</h3>
+                <p class="text-3xl font-bold text-blue-500">0 cm</p>
+            </div>
+        </div>
+
+        <!-- Weather Forecast -->
+        <div class="mb-6" data-aos="fade-up">
+            <h2 class="text-xl text-center font-bold text-gray-800 mb-4">6-Day Forecast</h2>
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
+                <div class="weather-card bg-white p-4 rounded-xl shadow-md text-center">
+                    <p class="font-semibold text-gray-700">Today</p>
+                    <img src="https://feed-icons-dbgxg7hrccgddubp.a03.azurefd.net/Weather/fa/clear-day.svg" alt="Clear"
+                        class="w-12 h-12 mx-auto my-2">
+                    <p class="text-gray-600">Clear</p>
+                    <p class="font-bold text-gray-800">16.1° / 10.7°</p>
+                    <p class="text-sm text-gray-500">0% precip</p>
+                </div>
+                <div class="weather-card bg-white p-4 rounded-xl shadow-md text-center">
+                    <p class="font-semibold text-gray-700">Tomorrow</p>
+                    <img src="https://feed-icons-dbgxg7hrccgddubp.a03.azurefd.net/Weather/fa/clear-day.svg" alt="Clear"
+                        class="w-12 h-12 mx-auto my-2">
+                    <p class="text-gray-600">Clear</p>
+                    <p class="font-bold text-gray-800">19.6° / 12.0°</p>
+                    <p class="text-sm text-gray-500">0% precip</p>
+                </div>
+                <div class="weather-card bg-white p-4 rounded-xl shadow-md text-center">
+                    <p class="font-semibold text-gray-700">Sat</p>
+                    <img src="https://feed-icons-dbgxg7hrccgddubp.a03.azurefd.net/Weather/fa/rain.svg" alt="Rain"
+                        class="w-12 h-12 mx-auto my-2">
+                    <p class="text-gray-600">Rainy</p>
+                    <p class="font-bold text-gray-800">18.2° / 11.7°</p>
+                    <p class="text-sm text-gray-500">65% precip</p>
+                </div>
+                <div class="weather-card bg-white p-4 rounded-xl shadow-md text-center">
+                    <p class="font-semibold text-gray-700">Sun</p>
+                    <img src="https://feed-icons-dbgxg7hrccgddubp.a03.azurefd.net/Weather/fa/partly-cloudy-day.svg"
+                        alt="Partly cloudy" class="w-12 h-12 mx-auto my-2">
+                    <p class="text-gray-600">Partly cloudy</p>
+                    <p class="font-bold text-gray-800">16.1° / 11.4°</p>
+                    <p class="text-sm text-gray-500">45% precip</p>
+                </div>
+                <div class="weather-card bg-white p-4 rounded-xl shadow-md text-center">
+                    <p class="font-semibold text-gray-700">Mon</p>
+                    <img src="https://feed-icons-dbgxg7hrccgddubp.a03.azurefd.net/Weather/fa/clear-day.svg" alt="Clear"
+                        class="w-12 h-12 mx-auto my-2">
+                    <p class="text-gray-600">Clear</p>
+                    <p class="font-bold text-gray-800">16.7° / 11.4°</p>
+                    <p class="text-sm text-gray-500">0% precip</p>
+                </div>
+                <div class="weather-card bg-white p-4 rounded-xl shadow-md text-center">
+                    <p class="font-semibold text-gray-700">Tue</p>
+                    <img src="https://feed-icons-dbgxg7hrccgddubp.a03.azurefd.net/Weather/fa/clear-day.svg" alt="Clear"
+                        class="w-12 h-12 mx-auto my-2">
+                    <p class="text-gray-600">Clear</p>
+                    <p class="font-bold text-gray-800">16.7° / 11.4°</p>
+                    <p class="text-sm text-gray-500">0% precip</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Video Section -->
+        <div class="mb-6" data-aos="fade-up">
+            <h2 class="text-xl text-center font-bold text-gray-800 mb-4">Mountain View</h2>
+            <div class="video-container rounded-xl overflow-hidden shadow-lg">
+                <iframe src="https://www.youtube.com/embed/OSKgIDnBwwQ" frameborder="0" allowfullscreen></iframe>
+            </div>
+        </div>
+
+        <!-- Season Dates -->
+        <div class="mb-4 bg-white rounded-xl shadow-md overflow-hidden" data-aos="fade-up">
+            <div class="p-6">
+                <h2 class="text-xl text-center font-bold text-gray-800 mb-4">Season Dates</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="bg-blue-50 p-4 rounded-lg">
+                        <h3 class="font-bold text-blue-800 mb-2 text-center">Opening Day</h3>
+                        <p class="text-blue-500 text-center">November 28, 2025</p>
+                    </div>
+                    <div class="bg-blue-50 p-4 rounded-lg">
+                        <h3 class="font-bold text-blue-800 mb-2 text-center">Closing Day</h3>
+                        <p class="text-blue-500 text-center">April 28, 2026</p>
+                    </div>
+                </div>
             </div>
         </div>
     </main>    
+
+    <script>
+        AOS.init();
+        feather.replace();
+
+        // Format last update date
+        document.addEventListener('DOMContentLoaded', function () {
+            const lastUpdate = new Date("2025-09-18T00:22:37.4911109Z");
+            const options = {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            };
+            document.getElementById('lastUpdate').textContent = lastUpdate.toLocaleDateString('en-US', options);
+        });
+    </script>
 </body>
+
 </html>
