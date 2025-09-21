@@ -4,12 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mountain, let's gooo!</title>
+    <title>BORAAA PRA MONTANHAAA</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
     <script src="https://unpkg.com/feather-icons"></script>
+    <script src="./data/response.js"></script>
+    <script defer src="./js/script.js"></script>
     <link rel="stylesheet" href="./css/style.css">
     <link rel="icon" type="image/png" href="./images/splash.png">
 </head>
@@ -18,10 +20,10 @@
     <!-- Header -->
     <header class="bg-blue-400 shadow-md">
         <div class="container mx-auto px-4 py-4">
-            <div class="flex flex-col md:flex-row justify-between items-center ">
+            <div class="flex flex-col md:flex-row justify-between items-center">
                 <h1 class="text-2xl font-bold text-white">BORAAA PRA MONTANHAAA</h1>
                 <div class="flex items-center space-x-2">
-                    <span class="text-xs text-gray-700">Last updated: <span id="lastUpdate">2025-09-18</span></span>
+                    <span class="text-xs text-gray-700">Last updated: <span id="last-update">Undefined</span></span>
                     <button class="p-2 rounded-full bg-blue-100 text-blue-500">
                         <i data-feather="refresh-cw"></i>
                     </button>
@@ -30,56 +32,65 @@
         </div>
     </header>
 
+    <div id="loading-screen">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">Loading Mountain Data...</div>
+    </div>
+
     <!-- Main Content -->
-    <main class="container mx-auto px-4 py-4">
-        <!-- Countdown to Opening -->
-        <div class="countdown p-2 rounded-xl shadow-md mb-3" data-aos="fade-left">
-            <div class="flex flex-col md:flex-row items-center justify-between">
-                <div class="flex flex-col items-center mb-0">
-                    <h2 class="text-lg font-bold text-gray-800">Opening Day Countdown</h2>
-                    <span class="text-sm text-gray-600">November 28, 2025</span>
-                </div>
-                <div class="text-center">
-                    <p class="text-3xl font-bold text-red-600">71</p>
-                    <p class="text-md text-gray-700">days to go!</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Current Status Banner -->
-        <div class="bg-white rounded-xl shadow-md overflow-hidden mb-3" data-aos="fade-right">
-            <div class="p-4">
-                <div class="flex flex-col md:flex-row items-center justify-between">
-                    <div class="flex items-center mb-4 md:mb-0">
-                        <div class="mr-5">
-                            <img src="https://feed-icons-dbgxg7hrccgddubp.a03.azurefd.net/Weather/fa/partly-cloudy-night.svg"
-                                alt="Weather icon" class="w-16 h-16">
-                        </div>
-                        <div>
-                            <h2 class="text-lg font-bold text-gray-800">Current Conditions</h2>
-                            <p class="text-gray-600">Partly cloudy, 15.4°C</p>
-                            <p class="text-gray-600">Wind: 11.7 km/h</p>
-                        </div>
+    <main id="content" class="container mx-auto px-4 py-4" style="display: none;">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-6">
+            <!-- Countdown to Opening -->
+            <div class="countdown flex flex-col justify-center p-2 rounded-xl shadow-md mb-3 h-full"
+                data-aos="fade-left">
+                <div class="flex flex-col items-center justify-between">
+                    <div class="flex flex-col items-center mb-0">
+                        <h2 class="text-lg font-bold text-gray-800 md:mb-2">Opening Day Countdown</h2>
+                        <span id="opening-date" class="text-sm text-gray-600 md:mb-1">End of this year</span>
                     </div>
-                    <div class="bg-red-100 text-red-800 px-6 py-3 rounded-lg">
-                        <div class="flex items-center">
-                            <i data-feather="alert-circle" class="mr-2"></i>
-                            <span class="font-bold">Uphill Status: Closed</span>
-                        </div>
+                    <div class="text-center">
+                        <p id="days-for-opening" class="text-3xl font-bold text-red-600 md:mb-1">X</p>
+                        <p class="text-md text-gray-700">days to go!</p>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Runs Info -->
-        <div class="bg-white rounded-xl shadow-md overflow-hidden mb-6" data-aos="fade-up">
-            <div class="p-4">
-                <h2 class="text-lg font-bold text-gray-800 mb-4 text-center">Runs Information</h2>
-                <div class="flex flex-col md:flex-row items-center">
-                    <div class="w-full bg-gray-200 rounded-full h-4">
-                        <div class="bg-blue-500 h-4 rounded-full" style="width: 0%"></div>
+            <!-- Current Status Banner -->
+            <div class="bg-white rounded-xl flex flex-col justify-center shadow-md overflow-hidden mb-3 h-full"
+                data-aos="fade-right">
+                <div class="p-4">
+                    <div class="flex flex-col items-center justify-between">
+                        <div class="flex items-center mb-4 md:mb-2">
+                            <div class="mr-5">
+                                <img id="current-weather-icon" src="" alt="Weather icon" class="w-16 h-16">
+                            </div>
+                            <div>
+                                <h2 class="text-lg font-bold text-gray-800">Current Conditions</h2>
+                                <p id="current-weather-summary" class="text-gray-600">Partly cloudy, 15.4°C</p>
+                                <p id="current-weather-wind" class="text-gray-600">Wind: 11.7 km/h</p>
+                            </div>
+                        </div>
+                        <div class="bg-red-100 text-red-800 px-6 py-3 rounded-lg">
+                            <div class="flex items-center">
+                                <i data-feather="alert-circle" class="mr-2"></i>
+                                <span class="font-bold">Uphill Status: <span id="uphill-status">Unknown</span></span>
+                            </div>
+                        </div>
                     </div>
-                    <span class="mt-2 md:mt-0 md:ml-4 text-gray-700 font-bold">0% Open (0 runs)</span>
+                </div>
+            </div>
+
+            <!-- Runs Info -->
+            <div class="bg-white rounded-xl flex flex-col justify-center shadow-md overflow-hidden mb-6 h-full"
+                data-aos="fade-up">
+                <div class="p-4">
+                    <h2 class="text-lg font-bold text-gray-800 mb-4 text-center">Runs Information</h2>
+                    <div class="flex flex-col items-center">
+                        <div class="w-full bg-gray-200 rounded-full h-4">
+                            <div class="bg-blue-500 h-4 rounded-full" style="width: 0%"></div>
+                        </div>
+                        <span class="mt-2 text-gray-700 font-bold"><span id="open-run-percentage">0</span>% Open (<span id="open-run">0</span> runs)</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -108,7 +119,7 @@
         <!-- Weather Forecast -->
         <div class="mb-6" data-aos="fade-up">
             <h2 class="text-xl text-center font-bold text-gray-800 mb-4">6-Day Forecast</h2>
-            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
                 <div class="weather-card bg-white p-4 rounded-xl shadow-md text-center">
                     <p class="font-semibold text-gray-700">Today</p>
                     <img src="https://feed-icons-dbgxg7hrccgddubp.a03.azurefd.net/Weather/fa/clear-day.svg" alt="Clear"
@@ -184,24 +195,11 @@
                 </div>
             </div>
         </div>
-    </main>    
+    </main>
 
     <script>
         AOS.init();
         feather.replace();
-
-        // Format last update date
-        document.addEventListener('DOMContentLoaded', function () {
-            const lastUpdate = new Date("2025-09-18T00:22:37.4911109Z");
-            const options = {
-                year: 'numeric',
-                month: 'short',
-                day: 'numeric',
-                hour: '2-digit',
-                minute: '2-digit'
-            };
-            document.getElementById('lastUpdate').textContent = lastUpdate.toLocaleDateString('en-US', options);
-        });
     </script>
 </body>
 
