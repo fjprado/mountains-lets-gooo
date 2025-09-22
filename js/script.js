@@ -24,14 +24,17 @@ const fetchCypressDetails = async () => {
         }
     }
     
+    document.getElementById('loading-screen').style.opacity = '0';
     if (cypressDetails) {
-        document.getElementById('loading-screen').style.opacity = '0';
-        document.getElementById('content').style.display = 'block';
-        setTimeout(function () {
-            document.getElementById('loading-screen').style.display = 'none';
-        }, 500);
-        document.getElementById('last-update').textContent = cypressDetails.lastUpdate
+        document.getElementById('content').style.display = 'block';        
+    }else{
+        document.getElementById('fail-screen').style.display = 'block';
     }
+
+    setTimeout(function () {
+        document.getElementById('loading-screen').style.display = 'none';
+    }, 500);
+    document.getElementById('last-update').textContent = cypressDetails.lastUpdate ?? 'N/A';
 }
 
 
