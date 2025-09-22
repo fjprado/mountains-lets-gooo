@@ -24,8 +24,8 @@
                 <h1 class="text-2xl font-bold text-white">BORAAA PRA MONTANHAAA</h1>
                 <div class="flex items-center space-x-2">
                     <span class="text-xs text-gray-700">Last updated: <span id="last-update">Undefined</span></span>
-                    <button class="p-2 rounded-full bg-blue-100 text-blue-500">
-                        <i data-feather="refresh-cw"></i>
+                    <button id="refresh-button" class="p-2 rounded-full bg-blue-100 text-blue-500">
+                        <i id="refresh-button-icon" data-feather="refresh-cw"></i>
                     </button>
                 </div>
             </div>
@@ -39,22 +39,22 @@
 
     <!-- Main Content -->
     <main id="content" class="container mx-auto px-4 py-4" style="display: none;">
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-6">
-            <!-- Countdown to Opening -->
-            <div class="countdown flex flex-col justify-center p-2 rounded-xl shadow-md mb-3 h-full"
-                data-aos="fade-left">
-                <div class="flex flex-col items-center justify-between">
-                    <div class="flex flex-col items-center mb-0">
-                        <h2 class="text-lg font-bold text-gray-800 md:mb-2">Opening Day Countdown</h2>
-                        <span id="opening-date" class="text-sm text-gray-600 md:mb-1">End of this year</span>
-                    </div>
-                    <div class="text-center">
-                        <p id="days-for-opening" class="text-3xl font-bold text-red-600 md:mb-1">X</p>
-                        <p class="text-md text-gray-700">days to go!</p>
-                    </div>
+        <!-- Countdown to Opening -->
+        <div id="countdown" class="countdown flex flex-col justify-center p-2 rounded-xl shadow-md mb-4 h-full"
+            data-aos="fade-left">
+            <div class="flex flex-col items-center justify-between">
+                <div class="flex flex-col items-center mb-0">
+                    <h2 class="text-lg font-bold text-gray-800 md:mb-2">Opening Day Countdown</h2>
+                    <span id="opening-date" class="text-sm text-gray-600 md:mb-1">End of this year</span>
+                </div>
+                <div class="text-center">
+                    <p id="days-for-opening" class="text-3xl font-bold text-red-600 md:mb-1">X</p>
+                    <p class="text-md text-gray-700">days to go!</p>
                 </div>
             </div>
+        </div>
 
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
             <!-- Current Status Banner -->
             <div class="bg-white rounded-xl flex flex-col justify-center shadow-md overflow-hidden mb-3 h-full"
                 data-aos="fade-right">
@@ -66,11 +66,11 @@
                             </div>
                             <div>
                                 <h2 class="text-lg font-bold text-gray-800">Current Conditions</h2>
-                                <p id="current-weather-summary" class="text-gray-600">Partly cloudy, 15.4°C</p>
-                                <p id="current-weather-wind" class="text-gray-600">Wind: 11.7 km/h</p>
+                                <p id="current-weather-summary" class="text-gray-600">Unknown</p>
+                                <p id="current-weather-wind" class="text-gray-600">Wind: Unknown km/h</p>
                             </div>
                         </div>
-                        <div class="bg-red-100 text-red-800 px-6 py-3 rounded-lg">
+                        <div id="uphill-status-banner" class="bg-red-100 text-red-800 px-6 py-3 rounded-lg">
                             <div class="flex items-center">
                                 <i data-feather="alert-circle" class="mr-2"></i>
                                 <span class="font-bold">Uphill Status: <span id="uphill-status">Unknown</span></span>
@@ -87,9 +87,11 @@
                     <h2 class="text-lg font-bold text-gray-800 mb-4 text-center">Runs Information</h2>
                     <div class="flex flex-col items-center">
                         <div class="w-full bg-gray-200 rounded-full h-4">
-                            <div class="bg-blue-500 h-4 rounded-full" style="width: 0%"></div>
+                            <div id="open-run-percentage-bar" class="bg-blue-500 h-4 rounded-full" style="width: 0%">
+                            </div>
                         </div>
-                        <span class="mt-2 text-gray-700 font-bold"><span id="open-run-percentage">0</span>% Open (<span id="open-run">0</span> runs)</span>
+                        <span class="mt-2 text-gray-700 font-bold"><span id="open-run-percentage">0</span>% Open (<span
+                                id="open-run">0</span> runs)</span>
                     </div>
                 </div>
             </div>
@@ -100,19 +102,19 @@
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
             <div class="snow-stats p-6 rounded-xl shadow-md text-center" data-aos="fade-right">
                 <h3 class="text-lg font-semibold text-gray-700 mb-2">Overnight</h3>
-                <p class="text-3xl font-bold text-blue-500">0 cm</p>
+                <p class="text-3xl font-bold text-blue-500"><span id="snow-overnight">0</span> cm</p>
             </div>
             <div class="snow-stats p-6 rounded-xl shadow-md text-center" data-aos="fade-left" data-aos-delay="100">
                 <h3 class="text-lg font-semibold text-gray-700 mb-2">Last 24h</h3>
-                <p class="text-3xl font-bold text-blue-500">0 cm</p>
+                <p class="text-3xl font-bold text-blue-500"><span id="snow-24hr">0</span> cm</p>
             </div>
             <div class="snow-stats p-6 rounded-xl shadow-md text-center" data-aos="fade-right" data-aos-delay="200">
                 <h3 class="text-lg font-semibold text-gray-700 mb-2">Last 48h</h3>
-                <p class="text-3xl font-bold text-blue-500">0 cm</p>
+                <p class="text-3xl font-bold text-blue-500"><span id="snow-48hr">0</span> cm</p>
             </div>
             <div class="snow-stats p-6 rounded-xl shadow-md text-center" data-aos="fade-left" data-aos-delay="300">
                 <h3 class="text-lg font-semibold text-gray-700 mb-2">Last 72h</h3>
-                <p class="text-3xl font-bold text-blue-500">0 cm</p>
+                <p class="text-3xl font-bold text-blue-500"><span id="snow-72hr">0</span> cm</p>
             </div>
         </div>
 
@@ -122,51 +124,45 @@
             <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
                 <div class="weather-card bg-white p-4 rounded-xl shadow-md text-center">
                     <p class="font-semibold text-gray-700">Today</p>
-                    <img src="https://feed-icons-dbgxg7hrccgddubp.a03.azurefd.net/Weather/fa/clear-day.svg" alt="Clear"
-                        class="w-12 h-12 mx-auto my-2">
-                    <p class="text-gray-600">Clear</p>
-                    <p class="font-bold text-gray-800">16.1° / 10.7°</p>
-                    <p class="text-sm text-gray-500">0% precip</p>
+                    <img id="forecast-day-1-icon" src="" alt="" class="w-12 h-12 mx-auto my-2">
+                    <p id="forecast-day-1-summary" class="text-gray-600">Unknown</p>
+                    <p id="forecast-day-1-temp" class="font-bold text-gray-800">X° / x°</p>
+                    <p id="forecast-day-1-precip" class="text-sm text-gray-500">X% precip</p>
                 </div>
                 <div class="weather-card bg-white p-4 rounded-xl shadow-md text-center">
                     <p class="font-semibold text-gray-700">Tomorrow</p>
-                    <img src="https://feed-icons-dbgxg7hrccgddubp.a03.azurefd.net/Weather/fa/clear-day.svg" alt="Clear"
-                        class="w-12 h-12 mx-auto my-2">
-                    <p class="text-gray-600">Clear</p>
-                    <p class="font-bold text-gray-800">19.6° / 12.0°</p>
-                    <p class="text-sm text-gray-500">0% precip</p>
+                    <img id="forecast-day-2-icon" src="" alt="" class="w-12 h-12 mx-auto my-2">
+                    <p id="forecast-day-2-summary" class="text-gray-600">Unknown</p>
+                    <p id="forecast-day-2-temp" class="font-bold text-gray-800">X° / x°</p>
+                    <p id="forecast-day-2-precip" class="text-sm text-gray-500">X% precip</p>
                 </div>
                 <div class="weather-card bg-white p-4 rounded-xl shadow-md text-center">
-                    <p class="font-semibold text-gray-700">Sat</p>
-                    <img src="https://feed-icons-dbgxg7hrccgddubp.a03.azurefd.net/Weather/fa/rain.svg" alt="Rain"
-                        class="w-12 h-12 mx-auto my-2">
-                    <p class="text-gray-600">Rainy</p>
-                    <p class="font-bold text-gray-800">18.2° / 11.7°</p>
-                    <p class="text-sm text-gray-500">65% precip</p>
+                    <p id="forecast-day-3-weekday" class="font-semibold text-gray-700">Unknown</p>
+                    <img id="forecast-day-3-icon" src="" alt="" class="w-12 h-12 mx-auto my-2">
+                    <p id="forecast-day-3-summary" class="text-gray-600">Unknown</p>
+                    <p id="forecast-day-3-temp" class="font-bold text-gray-800">X° / x°</p>
+                    <p id="forecast-day-3-precip" class="text-sm text-gray-500">X% precip</p>
                 </div>
                 <div class="weather-card bg-white p-4 rounded-xl shadow-md text-center">
-                    <p class="font-semibold text-gray-700">Sun</p>
-                    <img src="https://feed-icons-dbgxg7hrccgddubp.a03.azurefd.net/Weather/fa/partly-cloudy-day.svg"
-                        alt="Partly cloudy" class="w-12 h-12 mx-auto my-2">
-                    <p class="text-gray-600">Partly cloudy</p>
-                    <p class="font-bold text-gray-800">16.1° / 11.4°</p>
-                    <p class="text-sm text-gray-500">45% precip</p>
+                    <p id="forecast-day-4-weekday" class="font-semibold text-gray-700">Unknown</p>
+                    <img id="forecast-day-4-icon" src="" alt="" class="w-12 h-12 mx-auto my-2">
+                    <p id="forecast-day-4-summary" class="text-gray-600">Unknown</p>
+                    <p id="forecast-day-4-temp" class="font-bold text-gray-800">X° / x°</p>
+                    <p id="forecast-day-4-precip" class="text-sm text-gray-500">X% precip</p>
                 </div>
                 <div class="weather-card bg-white p-4 rounded-xl shadow-md text-center">
-                    <p class="font-semibold text-gray-700">Mon</p>
-                    <img src="https://feed-icons-dbgxg7hrccgddubp.a03.azurefd.net/Weather/fa/clear-day.svg" alt="Clear"
-                        class="w-12 h-12 mx-auto my-2">
-                    <p class="text-gray-600">Clear</p>
-                    <p class="font-bold text-gray-800">16.7° / 11.4°</p>
-                    <p class="text-sm text-gray-500">0% precip</p>
+                    <p id="forecast-day-5-weekday" class="font-semibold text-gray-700">Unknown</p>
+                    <img id="forecast-day-5-icon" src="" alt="" class="w-12 h-12 mx-auto my-2">
+                    <p id="forecast-day-5-summary" class="text-gray-600">Unknown</p>
+                    <p id="forecast-day-5-temp" class="font-bold text-gray-800">X° / x°</p>
+                    <p id="forecast-day-5-precip" class="text-sm text-gray-500">X% precip</p>
                 </div>
                 <div class="weather-card bg-white p-4 rounded-xl shadow-md text-center">
-                    <p class="font-semibold text-gray-700">Tue</p>
-                    <img src="https://feed-icons-dbgxg7hrccgddubp.a03.azurefd.net/Weather/fa/clear-day.svg" alt="Clear"
-                        class="w-12 h-12 mx-auto my-2">
-                    <p class="text-gray-600">Clear</p>
-                    <p class="font-bold text-gray-800">16.7° / 11.4°</p>
-                    <p class="text-sm text-gray-500">0% precip</p>
+                    <p id="forecast-day-6-weekday" class="font-semibold text-gray-700">Unknown</p>
+                    <img id="forecast-day-6-icon" src="" alt="" class="w-12 h-12 mx-auto my-2">
+                    <p id="forecast-day-6-summary" class="text-gray-600">Unknown</p>
+                    <p id="forecast-day-6-temp" class="font-bold text-gray-800">X° / x°</p>
+                    <p id="forecast-day-6-precip" class="text-sm text-gray-500">X% precip</p>
                 </div>
             </div>
         </div>
@@ -186,11 +182,11 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div class="bg-blue-50 p-4 rounded-lg">
                         <h3 class="font-bold text-blue-800 mb-2 text-center">Opening Day</h3>
-                        <p class="text-blue-500 text-center">November 28, 2025</p>
+                        <p id="opening-date-footer" class="text-blue-500 text-center">November 28, 2025</p>
                     </div>
                     <div class="bg-blue-50 p-4 rounded-lg">
                         <h3 class="font-bold text-blue-800 mb-2 text-center">Closing Day</h3>
-                        <p class="text-blue-500 text-center">April 28, 2026</p>
+                        <p id="closing-date-footer" class="text-blue-500 text-center">April 28, 2026</p>
                     </div>
                 </div>
             </div>

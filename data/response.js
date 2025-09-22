@@ -1,6 +1,6 @@
 const cypressDataJson = {
   "operations": {
-    "uphillStatus": "Closed",
+    "uphillStatus": "Open",
     "openTime": null,
     "closeTime": null,
     "nightOpenTime": null,
@@ -8,13 +8,13 @@ const cypressDataJson = {
   },
   "video": "https://www.youtube.com/embed/OSKgIDnBwwQ",
   "snow": {
-    "overNight": "0",
-    "last24": "0",
-    "last48": "0",
-    "last72": "0"
+    "overnight": "10",
+    "last24": "15",
+    "last48": "20",
+    "last72": "25"
   },
   "runsOpen": 0,
-  "runsOpenPercent": 0,
+  "runsOpenPercent": 15,
   "openingDate": "2025-11-28",
   "daysForOpening": 71,
   "closingDate": "2026-04-28",
@@ -59,6 +59,14 @@ const cypressDataJson = {
       "conditionsSummary": "Partly cloudy",
       "icon": "https://feed-icons-dbgxg7hrccgddubp.a03.azurefd.net/Weather/fa/partly-cloudy-day.svg"
     },
+    {
+      "date": "2025-09-22T13:00:00Z",
+      "precipitation": 0,
+      "high": 16.7,
+      "low": 11.4,
+      "conditionsSummary": "Clear",
+      "icon": "https://feed-icons-dbgxg7hrccgddubp.a03.azurefd.net/Weather/fa/clear-day.svg"
+    }    ,
     {
       "date": "2025-09-22T13:00:00Z",
       "precipitation": 0,
