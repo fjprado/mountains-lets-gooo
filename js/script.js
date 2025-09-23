@@ -1,4 +1,4 @@
-let cypressDetails = {};
+let cypressDetails = null;
 const fullDateStyle = {
     year: 'numeric',
     month: 'short',
@@ -18,25 +18,31 @@ document.getElementById('refresh-button').addEventListener('click', function () 
 
 const fetchCypressDetails = async () => {
     for (let attempt = 1; attempt <= 3; attempt++) {
-        const response = await fetch('https://mountain-lets-gooo-api.azurewebsites.net/api/CypressData');
-        if (response.ok) {
-            cypressDetails = await response.json();
+        try {
+            const response = await fetch('https://mountain-lets-gooo-api.azurewebsites.net/api/CypressData');
+
+            document.getElementById('loading-screen').style.opacity = '0';
+
+            if (response.ok) {
+                cypressDetails = await response.json();
+                document.getElementById('content').style.display = 'block';
+                return;
+            }
+        } catch (e) { }
+
+        if (attempt < 3) {
+            await new Promise(res => setTimeout(res, 500)); // wait before retry
+        } else {
+            document.getElementById('fail-screen').style.display = 'flex';
         }
     }
-    
-    document.getElementById('loading-screen').style.opacity = '0';
-    if (cypressDetails) {
-        document.getElementById('content').style.display = 'block';        
-    }else{
-        document.getElementById('fail-screen').style.display = 'block';
-    }
 
-    setTimeout(function () {
+    setTimeout(() => {
         document.getElementById('loading-screen').style.display = 'none';
     }, 500);
-    document.getElementById('last-update').textContent = cypressDetails.lastUpdate ?? 'N/A';
-}
 
+    document.getElementById('last-update').textContent = cypressDetails?.lastUpdate ?? 'N/A';
+}
 
 const updateUI = () => {
     // Opening Countdown
@@ -87,6 +93,7 @@ const updateUI = () => {
 
 const initializePage = async () => {
     await fetchCypressDetails();
+
     if (cypressDetails) {
         document.getElementById('last-update').textContent = new Date(cypressDetails.lastUpdate).toLocaleDateString('en-US', fullDateStyle);
         updateUI();
