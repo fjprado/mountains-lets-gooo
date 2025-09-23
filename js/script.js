@@ -26,31 +26,27 @@ const fetchCypressDetails = async () => {
             if (response.ok) {
                 cypressDetails = await response.json();
                 document.getElementById('content').style.display = 'block';
+                document.getElementById('loading-screen').style.display = 'none';
                 return;
             }
         } catch (e) { }
 
         if (attempt < 3) {
-            await new Promise(res => setTimeout(res, 500)); // wait before retry
+            await new Promise(res => setTimeout(res, 500));
         } else {
             document.getElementById('fail-screen').style.display = 'flex';
+            document.getElementById('loading-screen').style.display = 'none';
         }
     }
-
-    setTimeout(() => {
-        document.getElementById('loading-screen').style.display = 'none';
-    }, 500);
-
-    document.getElementById('last-update').textContent = cypressDetails?.lastUpdate ?? 'N/A';
 }
 
 const updateUI = () => {
     // Opening Countdown
-    if (cypressDetails.daysForOpening <= 0) {
-        document.getElementById('countdown').style.display = 'none';
+    if (cypressDetails.daysForOpening > 0) {
+        document.getElementById('countdown').style.display = 'flex';
+        document.getElementById('opening-date').textContent = new Date(cypressDetails.openingDate).toLocaleDateString('en-US', shortDateStyle);
+        document.getElementById('days-for-opening').textContent = cypressDetails.daysForOpening;
     }
-    document.getElementById('opening-date').textContent = new Date(cypressDetails.openingDate).toLocaleDateString('en-US', shortDateStyle);
-    document.getElementById('days-for-opening').textContent = cypressDetails.daysForOpening;
 
     // Current Weather
     document.getElementById('current-weather-icon').src = cypressDetails.currentWeather.icon;
@@ -95,7 +91,7 @@ const initializePage = async () => {
     await fetchCypressDetails();
 
     if (cypressDetails) {
-        document.getElementById('last-update').textContent = new Date(cypressDetails.lastUpdate).toLocaleDateString('en-US', fullDateStyle);
+        document.getElementById('last-update').textContent = cypressDetails?.lastUpdate ? new Date(cypressDetails.lastUpdate).toLocaleDateString('en-US', fullDateStyle) : 'N/A';
         updateUI();
     }
 }
