@@ -43,9 +43,12 @@ const fetchCypressDetails = async () => {
 
 const updateUI = () => {
     // Opening Countdown
+    let openingDate = new Date(cypressDetails.openingDate);
+    openingDate.setDate(openingDate.getDate()+1);
+
     if (cypressDetails.daysForOpening > 0) {
-        document.getElementById('countdown').style.display = 'flex';
-        document.getElementById('opening-date').textContent = new Date(cypressDetails.openingDate).toLocaleDateString('en-US', shortDateStyle);
+        document.getElementById('countdown').style.display = 'flex';        
+        document.getElementById('opening-date').textContent = openingDate.toLocaleDateString('en-US', shortDateStyle);
         document.getElementById('days-for-opening').textContent = cypressDetails.daysForOpening;
     }
 
@@ -77,15 +80,17 @@ const updateUI = () => {
         document.getElementById(`forecast-day-${i + 1}-icon`).src = forecast.icon;
         document.getElementById(`forecast-day-${i + 1}-icon`).alt = forecast.conditionsSummary;
         if (document.getElementById(`forecast-day-${i + 1}-weekday`)) {
-            document.getElementById(`forecast-day-${i + 1}-weekday`).textContent = forecast.date ? new Date(forecast.date).toLocaleDateString('en-US', { weekday: 'short' }) : '';
+            document.getElementById(`forecast-day-${i + 1}-weekday`).textContent = new Date(forecast.date).toLocaleDateString('en-US', { weekday: 'short' });
         }
         document.getElementById(`forecast-day-${i + 1}-summary`).textContent = forecast.conditionsSummary;
         document.getElementById(`forecast-day-${i + 1}-temp`).textContent = `${forecast.high}° / ${forecast.low}°`;
         document.getElementById(`forecast-day-${i + 1}-precip`).textContent = `${forecast.precipitation}% precip`;
     }
 
-    document.getElementById('opening-date-footer').textContent = new Date(cypressDetails.openingDate).toLocaleDateString('en-US', shortDateStyle);
-    document.getElementById('closing-date-footer').textContent = new Date(cypressDetails.closingDate).toLocaleDateString('en-US', shortDateStyle);
+    let closingDate = new Date(cypressDetails.closingDate);
+    closingDate.setDate(closingDate.getDate()+1);
+    document.getElementById('opening-date-footer').textContent = openingDate.toLocaleDateString('en-US', shortDateStyle);
+    document.getElementById('closing-date-footer').textContent = closingDate.toLocaleDateString('en-US', shortDateStyle);
 }
 
 const initializePage = async () => {
