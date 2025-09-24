@@ -8,9 +8,10 @@ const fullDateStyle = {
 };
 const shortDateStyle = { year: 'numeric', month: 'long', day: 'numeric' };
 
-document.getElementById('refresh-button').addEventListener('click', function () {
+document.getElementById('refresh-button').addEventListener('click', async function () {
     const icon = document.getElementById('refresh-button-icon');
     icon.classList.add('animate-spin');
+    await initializePage();
     setTimeout(() => {
         icon.classList.remove('animate-spin');
     }, 1000);
@@ -19,7 +20,7 @@ document.getElementById('refresh-button').addEventListener('click', function () 
 const fetchCypressDetails = async () => {
     for (let attempt = 1; attempt <= 3; attempt++) {
         try {
-            const response = await fetch('https://mountain-lets-gooo-api.azurewebsites.net/api/CypressData');
+            const response = await fetch('http://localhost:7157/api/CypressData');
 
             document.getElementById('loading-screen').style.opacity = '0';
 
