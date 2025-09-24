@@ -94,7 +94,10 @@ const initializePage = async () => {
     if (cypressDetails) {
         document.getElementById('last-update').textContent = cypressDetails?.lastUpdate ? new Date(cypressDetails.lastUpdate).toLocaleDateString('en-US', fullDateStyle) : 'N/A';
         updateUI();
+        AOS.refresh();
     }
 }
 
+AOS.init();
+feather.replace();
 initializePage();
