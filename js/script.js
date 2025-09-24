@@ -20,7 +20,7 @@ document.getElementById('refresh-button').addEventListener('click', async functi
 const fetchCypressDetails = async () => {
     for (let attempt = 1; attempt <= 3; attempt++) {
         try {
-            const response = await fetch('http://localhost:7157/api/CypressData');
+            const response = await fetch('https://mountain-lets-gooo-api.azurewebsites.net/api/CypressData');
 
             document.getElementById('loading-screen').style.opacity = '0';
 
