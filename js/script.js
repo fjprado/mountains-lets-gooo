@@ -7,6 +7,10 @@ const fullDateStyle = {
     minute: '2-digit'
 };
 const shortDateStyle = { year: 'numeric', month: 'long', day: 'numeric' };
+const dateHourStyle = {
+    hour: '2-digit',
+    minute: '2-digit'
+};
 
 document.getElementById('refresh-button').addEventListener('click', async function () {
     const icon = document.getElementById('refresh-button-icon');
@@ -50,12 +54,22 @@ const updateUI = () => {
         document.getElementById('countdown').style.display = 'flex';        
         document.getElementById('opening-date').textContent = openingDate.toLocaleDateString('en-US', shortDateStyle);
         document.getElementById('days-for-opening').textContent = cypressDetails.daysForOpening;
+    }else{
+        let openTime = new Date(cypressDetails.operations.openTime);
+        let closeTime = new Date(cypressDetails.operations.closeTime);
+        let openNightTime = new Date(cypressDetails.operations.nightOpenTime);
+        let closeNightTime = new Date(cypressDetails.operations.nightCloseTime);
+        document.getElementById('operation-hours').style.display = 'flex';        
+        document.getElementById('operation-hours-open-time').textContent = openTime.toLocaleTimeString('en-US', dateHourStyle);
+        document.getElementById('operation-hours-close-time').textContent = closeTime.toLocaleTimeString('en-US', dateHourStyle);
+        document.getElementById('operation-hours-night-open-time').textContent = openNightTime.toLocaleTimeString('en-US', dateHourStyle);
+        document.getElementById('operation-hours-night-close-time').textContent = closeNightTime.toLocaleTimeString('en-US', dateHourStyle);
     }
 
     // Current Weather
     document.getElementById('current-weather-icon').src = cypressDetails.currentWeather.icon;
-    document.getElementById('current-weather-summary').textContent = cypressDetails.currentWeather.conditionsSummary + ', ' + cypressDetails.currentWeather.temperature + '°C';
-    document.getElementById('current-weather-wind').textContent = "Wind: " + cypressDetails.currentWeather.wind + ' km/h';
+    document.getElementById('current-weather-temperature').textContent = cypressDetails.currentWeather.temperature + '°C';
+    document.getElementById('current-weather-summary').textContent = cypressDetails.currentWeather.conditionsSummary;
     document.getElementById('current-weather-wind').textContent = "Wind: " + cypressDetails.currentWeather.wind + ' km/h';
     document.getElementById('uphill-status').textContent = cypressDetails.operations.uphillStatus;
     if (cypressDetails.operations.uphillStatus == "Open") {
