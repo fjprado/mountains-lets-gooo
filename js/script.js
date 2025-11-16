@@ -83,10 +83,11 @@ const updateUI = () => {
     document.getElementById('open-run-percentage-bar').style.width = cypressDetails.runsOpenPercent + '%';
 
     // Snow Stats
-    document.getElementById('snow-overnight').textContent = cypressDetails.snow.overnight;
-    document.getElementById('snow-24hr').textContent = cypressDetails.snow.last24;
-    document.getElementById('snow-48hr').textContent = cypressDetails.snow.last48;
-    document.getElementById('snow-72hr').textContent = cypressDetails.snow.last72;
+    document.getElementById('snow-overnight').textContent = cypressDetails.snowMidMountain.overnight > 300 ? `${cypressDetails.snowMidMountain.overnight / 100} mts` : `${cypressDetails.snowMidMountain.overnight} cm`;
+    document.getElementById('snow-24hr').textContent = cypressDetails.snowMidMountain.last24 > 300 ? `${cypressDetails.snowMidMountain.last24 / 100} mts` : `${cypressDetails.snowMidMountain.last24} cm`;
+    document.getElementById('snow-48hr').textContent = cypressDetails.snowMidMountain.last48 > 300 ? `${cypressDetails.snowMidMountain.last48 / 100} mts` : `${cypressDetails.snowMidMountain.last48} cm`;
+    document.getElementById('snow-72hr').textContent = cypressDetails.snowMidMountain.last72 > 300 ? `${cypressDetails.snowMidMountain.last72 / 100} mts` : `${cypressDetails.snowMidMountain.last72} cm`;
+    document.getElementById('snow-total').textContent = cypressDetails.snowMidMountain.seasonTotal > 300 ? `${cypressDetails.snowMidMountain.seasonTotal / 100} mts` : `${cypressDetails.snowMidMountain.seasonTotal} cm`;
 
     // Forecast
     for (let i = 0; i < 6; i++) {
@@ -106,6 +107,38 @@ const updateUI = () => {
     document.getElementById('opening-date-footer').textContent = openingDate.toLocaleDateString('en-US', shortDateStyle);
     document.getElementById('closing-date-footer').textContent = closingDate.toLocaleDateString('en-US', shortDateStyle);
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+    const videos = [
+        { title: "Mountain View", url: "https://www.youtube.com/embed/OSKgIDnBwwQ" },
+        { title: "Eagle Chair Cam", url: "https://www.youtube.com/embed/GTQQdQ8VVKI" },
+        { title: "Lions Chair Cam", url: "https://www.youtube.com/embed/3l314gixvh4" }
+    ];
+
+    let currentIndex = 0;
+
+    const titleElement = document.getElementById("carousel-title");
+    const videoElement = document.getElementById("carousel-video");
+    const leftButton = document.getElementById("carousel-left");
+    const rightButton = document.getElementById("carousel-right");
+
+    const updateCarousel = () => {
+        titleElement.textContent = videos[currentIndex].title;
+        videoElement.src = videos[currentIndex].url;
+    };
+
+    leftButton.addEventListener("click", () => {
+        currentIndex = (currentIndex - 1 + videos.length) % videos.length;
+        updateCarousel();
+    });
+
+    rightButton.addEventListener("click", () => {
+        currentIndex = (currentIndex + 1) % videos.length;
+        updateCarousel();
+    });
+
+    updateCarousel();
+});
 
 const initializePage = async () => {
     await fetchCypressDetails();
