@@ -48,22 +48,29 @@ const fetchCypressDetails = async () => {
 const updateUI = () => {
     // Opening Countdown
     let openingDate = new Date(cypressDetails.openingDate);
-    openingDate.setDate(openingDate.getDate()+1);
+    openingDate.setDate(openingDate.getDate() + 1);
 
     if (cypressDetails.daysForOpening > 0) {
-        document.getElementById('countdown').style.display = 'flex';        
+        document.getElementById('countdown').style.display = 'flex';
         document.getElementById('opening-date').textContent = openingDate.toLocaleDateString('en-US', shortDateStyle);
         document.getElementById('days-for-opening').textContent = cypressDetails.daysForOpening;
-    }else{
-        let openTime = new Date(cypressDetails.operations.openTime);
-        let closeTime = new Date(cypressDetails.operations.closeTime);
-        let openNightTime = new Date(cypressDetails.operations.nightOpenTime);
-        let closeNightTime = new Date(cypressDetails.operations.nightCloseTime);
-        document.getElementById('operation-hours').style.display = 'flex';        
-        document.getElementById('operation-hours-open-time').textContent = openTime.toLocaleTimeString('en-US', dateHourStyle);
-        document.getElementById('operation-hours-close-time').textContent = closeTime.toLocaleTimeString('en-US', dateHourStyle);
-        document.getElementById('operation-hours-night-open-time').textContent = openNightTime.toLocaleTimeString('en-US', dateHourStyle);
-        document.getElementById('operation-hours-night-close-time').textContent = closeNightTime.toLocaleTimeString('en-US', dateHourStyle);
+    } else {
+        document.getElementById('operation-hours').style.display = 'flex';
+        if (!cypressDetails.operations.openTime || !cypressDetails.operations.closeTime) {
+            document.getElementById('operation-hours-daytime').textContent = 'N/A';
+        } else {
+            let openTime = new Date(cypressDetails.operations.openTime);
+            let closeTime = new Date(cypressDetails.operations.closeTime);
+            document.getElementById('operation-hours-daytime').textContent = `${openTime.toLocaleTimeString('en-US', dateHourStyle)} - ${closeTime.toLocaleTimeString('en-US', dateHourStyle)}`;
+        }
+
+        if (!cypressDetails.operations.nightOpenTime || !cypressDetails.operations.nightCloseTime) {
+            document.getElementById('operation-hours-night-time').textContent = 'N/A';
+        } else {
+            let openNightTime = new Date(cypressDetails.operations.nightOpenTime);
+            let closeNightTime = new Date(cypressDetails.operations.nightCloseTime);
+            document.getElementById('operation-hours-night-time').textContent = `${openNightTime.toLocaleTimeString('en-US', dateHourStyle)} - ${closeNightTime.toLocaleTimeString('en-US', dateHourStyle)}`;
+        }
     }
 
     // Current Weather
@@ -103,7 +110,7 @@ const updateUI = () => {
     }
 
     let closingDate = new Date(cypressDetails.closingDate);
-    closingDate.setDate(closingDate.getDate()+1);
+    closingDate.setDate(closingDate.getDate() + 1);
     document.getElementById('opening-date-footer').textContent = openingDate.toLocaleDateString('en-US', shortDateStyle);
     document.getElementById('closing-date-footer').textContent = closingDate.toLocaleDateString('en-US', shortDateStyle);
 }
