@@ -93,7 +93,7 @@ const updateUI = () => {
     document.getElementById('snow-overnight').textContent = cypressDetails.snowMidMountain.overnight > 300 ? `${cypressDetails.snowMidMountain.overnight / 100} mts` : `${cypressDetails.snowMidMountain.overnight} cm`;
     document.getElementById('snow-24hr').textContent = cypressDetails.snowMidMountain.last24 > 300 ? `${cypressDetails.snowMidMountain.last24 / 100} mts` : `${cypressDetails.snowMidMountain.last24} cm`;
     document.getElementById('snow-48hr').textContent = cypressDetails.snowMidMountain.last48 > 300 ? `${cypressDetails.snowMidMountain.last48 / 100} mts` : `${cypressDetails.snowMidMountain.last48} cm`;
-    document.getElementById('snow-72hr').textContent = cypressDetails.snowMidMountain.last72 > 300 ? `${cypressDetails.snowMidMountain.last72 / 100} mts` : `${cypressDetails.snowMidMountain.last72} cm`;
+    document.getElementById('snow-week').textContent = cypressDetails.snowMidMountain.lastWeek > 300 ? `${cypressDetails.snowMidMountain.lastWeek / 100} mts` : `${cypressDetails.snowMidMountain.lastWeek} cm`;
     document.getElementById('snow-total').textContent = cypressDetails.snowMidMountain.seasonTotal > 300 ? `${cypressDetails.snowMidMountain.seasonTotal / 100} mts` : `${cypressDetails.snowMidMountain.seasonTotal} cm`;
 
     // Forecast
