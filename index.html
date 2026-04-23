@@ -5,6 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BORAAA PRA MONTANHAAA</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
@@ -15,15 +18,22 @@
     <link rel="icon" type="image/png" href="./images/splash.png">
 </head>
 
-<body class="bg-gray-50 font-sans">
+<body>
+
     <!-- Header -->
-    <header class="bg-blue-400 shadow-md">
+    <header class="site-header">
         <div class="container mx-auto px-4 py-4">
-            <div class="flex flex-col md:flex-row justify-between items-center">
-                <h1 class="text-2xl font-bold text-white">BORAAA PRA MONTANHAAA</h1>
-                <div class="flex items-center space-x-2">
-                    <span class="text-xs text-gray-700">Last updated: <span id="last-update">Loading...</span></span>
-                    <button id="refresh-button" class="p-2 rounded-full bg-blue-100 text-blue-500">
+            <div class="flex flex-col sm:flex-row justify-between items-center gap-2">
+                <div class="flex items-center gap-3">
+                    <span class="header-mountain">🏂</span>
+                    <div>
+                        <h1 class="header-title">BORAAA PRA MONTANHAAA</h1>
+                        <p class="header-subtitle">Cypress Mountain — Live Conditions</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3 self-end sm:self-auto">
+                    <span class="last-updated-text">Updated: <span id="last-update">Loading...</span></span>
+                    <button id="refresh-button" class="refresh-btn" aria-label="Refresh data">
                         <i id="refresh-button-icon" data-feather="refresh-cw"></i>
                     </button>
                 </div>
@@ -31,202 +41,238 @@
         </div>
     </header>
 
+    <!-- Loading Screen -->
     <div id="loading-screen">
         <div class="loading-spinner"></div>
         <div class="loading-text">Loading Mountain Data...</div>
     </div>
 
+    <!-- Fail Screen -->
     <div id="fail-screen" style="display: none;">
-        <div class="loading-text">Failed to get moutain report</div>
-        <div class="loading-text">Try again in a few seconds</div>
+        <div class="loading-text">Failed to get mountain report</div>
+        <p class="fail-sub">Try again in a few seconds</p>
     </div>
 
     <!-- Main Content -->
-    <main id="content" class="container mx-auto px-4 py-4" style="display: none;">
-        <!-- Countdown to Opening -->
-        <div id="countdown" class="countdown flex-col justify-center p-2 rounded-xl shadow-md mb-4 h-full"
-            style="display: none;" data-aos="fade-left">
-            <div class="flex flex-col items-center justify-between">
-                <div class="flex flex-col items-center mb-0">
-                    <h2 class="text-lg font-bold text-gray-800 md:mb-2">Opening Day Countdown</h2>
-                    <span id="opening-date" class="text-sm text-gray-600 md:mb-1">End of this year</span>
-                </div>
-                <div class="text-center">
-                    <p id="days-for-opening" class="text-3xl font-bold text-red-600 md:mb-1">X</p>
-                    <p class="text-md text-gray-700">days to go!</p>
+    <main id="content" class="pb-12" style="display: none;">
+
+        <!-- Status Section -->
+        <div class="container mx-auto px-4 pt-6">
+
+            <!-- Countdown to Opening -->
+            <div id="countdown" class="card countdown-card p-6 rounded-2xl mb-6 text-center"
+                style="display: none;" data-aos="fade-up">
+                <p class="section-label mb-2">Season Hasn't Started Yet</p>
+                <span id="opening-date" class="text-slate-500 text-sm block mb-3">Opening date pending</span>
+                <p id="days-for-opening" class="countdown-number">X</p>
+                <p class="text-slate-500 text-base uppercase tracking-widest mt-1">days to go</p>
+            </div>
+
+            <!-- Operation Hours -->
+            <div id="operation-hours" class="card open-now-card p-5 rounded-2xl mb-6 text-center justify-center"
+                style="display: none;" data-aos="fade-up">
+                <!-- Desktop: single centered row. Mobile: stacked rows -->
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8">
+                    <!-- Open badge -->
+                    <div class="flex items-center justify-center gap-3">
+                        <div class="open-pulse"></div>
+                        <span class="open-badge">OPEN NOW</span>
+                    </div>
+                    <div class="hours-divider hidden sm:block"></div>
+                    <!-- Hours: two rows on mobile, side by side on desktop -->
+                    <div class="flex flex-col sm:flex-row gap-3 sm:gap-8 items-center">
+                        <div class="text-center">
+                            <p class="hours-label">Daytime</p>
+                            <p class="hours-value" id="operation-hours-daytime">N/A</p>
+                        </div>
+                        <div class="text-center">
+                            <p class="hours-label">Night</p>
+                            <p class="hours-value" id="operation-hours-night-time">N/A</p>
+                        </div>
+                    </div>
+                    <div class="hours-divider hidden sm:block"></div>
+                    <!-- Uphill status -->
+                    <div id="uphill-status-banner" class="uphill-banner-inline">
+                        <i data-feather="trending-up" class="w-4 h-4 shrink-0"></i>
+                        <div class="text-center">
+                            <p class="hours-label">Uphill</p>
+                            <p class="hours-value" id="uphill-status">--</p>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Countdown to Opening -->
-        <div id="operation-hours" class="operation-hours flex-col justify-center p-2 rounded-xl shadow-md mb-4 h-full"
-            style="display: none;" data-aos="fade-left">
-            <div class="flex flex-col items-center justify-between">
-                <div class="flex flex-col items-center mb-0">
-                    <h2 class="text-lg font-bold text-gray-800 md:mb-2">Operation Hours</h2>
+            <!-- Current Conditions + Runs Info -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+
+                <!-- Current Conditions -->
+                <div class="card p-5 rounded-2xl text-center" data-aos="fade-right">
+                    <p class="section-label mb-3">Current Conditions</p>
+                    <div class="flex flex-col items-center gap-2">
+                        <img id="current-weather-icon" src="" alt="Weather icon" style="width: 68px; height: 68px;">
+                        <p id="current-weather-temperature" class="temp-display">--°C</p>
+                        <p id="current-weather-summary" class="text-slate-500 text-base">Unknown</p>
+                        <p id="current-weather-wind" class="text-slate-400 text-sm">Wind: -- km/h</p>
+                    </div>
                 </div>
-                <div class="flex items-center pt-2 mb-4 md:mb-2">
-                    <div class="text-center mr-5">
-                        <p class="text-md text-gray-700"><b>Daytime:</b> <span
-                                id="operation-hours-daytime">N/A</span></p>
-                        <p class="text-md text-gray-700"><b>Night Time:</b> <span
-                                id="operation-hours-night-time">N/A</span></p>
+
+                <!-- Runs Info -->
+                <div class="card p-5 rounded-2xl text-center flex flex-col" data-aos="fade-left">
+                    <p class="section-label mb-3">Runs Open</p>
+                    <div class="flex flex-col items-center justify-center gap-3 flex-1">
+                        <div class="runs-percentage-big">
+                            <span id="open-run-percentage" class="runs-number">0</span>
+                            <span class="runs-percent-sign">%</span>
+                        </div>
+                        <div class="w-full runs-bar-track rounded-full h-3">
+                            <div id="open-run-percentage-bar" class="runs-bar-fill h-3 rounded-full" style="width: 0%"></div>
+                        </div>
+                        <p class="text-slate-500 text-base"><span id="open-run" class="font-bold text-slate-700">0</span> runs open</p>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-            <!-- Current Status Banner -->
-            <div class="bg-white rounded-xl flex flex-col justify-center shadow-md overflow-hidden mb-3 h-full"
-                data-aos="fade-right">
-                <div class="p-2">
-                    <div class="flex flex-col items-center justify-between">
-                        <h2 class="text-lg font-bold text-gray-800">Current Conditions</h2>
-                        <div class="flex items-center pt-2 mb-4 md:mb-2">
-                            <div class="mr-5">
-                                <img id="current-weather-icon" src="" alt="Weather icon" class="w-16 h-16">
-                            </div>
-                            <div>
-                                <p id="current-weather-temperature" class="font-bold text-gray-800 text-2xl">Unknown</p>
-                                <p id="current-weather-summary" class="text-gray-600">Unknown</p>
-                                <p id="current-weather-wind" class="text-gray-600">Wind: Unknown km/h</p>
-                            </div>
-                        </div>
-                        <div id="uphill-status-banner" class="bg-red-100 text-red-800 px-6 py-3 rounded-lg">
-                            <div class="flex items-center">
-                                <i data-feather="alert-circle" class="mr-2"></i>
-                                <span class="font-bold">Uphill Status: <span id="uphill-status">Unknown</span></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        <!-- ★ PARALLAX BREAK 1 — Dawn -->
+        <div class="parallax-break parallax-dawn" data-aos="fade-in">
+            <div class="parallax-overlay"></div>
+            <div class="parallax-content">
+                <p class="parallax-eyebrow">Cypress Mountain</p>
+                <h2 class="parallax-headline">FRESH TRACKS AWAIT</h2>
             </div>
-
-            <!-- Runs Info -->
-            <div class="bg-white rounded-xl flex flex-col justify-center shadow-md overflow-hidden mb-6 h-full"
-                data-aos="fade-up">
-                <div class="p-4">
-                    <h2 class="text-lg font-bold text-gray-800 mb-4 text-center">Runs Information</h2>
-                    <div class="flex flex-col items-center">
-                        <div class="w-full bg-gray-200 rounded-full h-4">
-                            <div id="open-run-percentage-bar" class="bg-blue-500 h-4 rounded-full" style="width: 0%">
-                            </div>
-                        </div>
-                        <span class="mt-2 text-gray-700 font-bold"><span id="open-run-percentage">0</span>% Open (<span
-                                id="open-run">0</span> runs)</span>
-                    </div>
-                </div>
-            </div>
+            <div class="mountain-silhouette silhouette-dawn"></div>
         </div>
 
         <!-- Snow Stats -->
-        <h2 class="text-xl text-center font-bold text-gray-800 mb-4">Snow Stats</h2>
-        <div class="grid grid-cols-2 md:grid-cols-5 gap-4 mb-6" data-aos="fade-up">
-            <div class="snow-stats p-6 rounded-xl shadow-md text-center">
-                <h3 class="text-lg font-semibold text-gray-700 mb-2">Overnight</h3>
-                <p class="text-3xl font-bold text-blue-500"><span id="snow-overnight">0 cm</span></p>
-            </div>
-            <div class="snow-stats p-6 rounded-xl shadow-md text-center">
-                <h3 class="text-lg font-semibold text-gray-700 mb-2">Last 24h</h3>
-                <p class="text-3xl font-bold text-blue-500"><span id="snow-24hr">0 cm</span></p>
-            </div>
-            <div class="snow-stats p-6 rounded-xl shadow-md text-center">
-                <h3 class="text-lg font-semibold text-gray-700 mb-2">Last 48h</h3>
-                <p class="text-3xl font-bold text-blue-500"><span id="snow-48hr">0 cm</span></p>
-            </div>
-            <div class="snow-stats p-6 rounded-xl shadow-md text-center">
-                <h3 class="text-lg font-semibold text-gray-700 mb-2">Last Week</h3>
-                <p class="text-3xl font-bold text-blue-500"><span id="snow-week">0 cm</span></p>
-            </div>
-            <div class="snow-stats p-6 rounded-xl shadow-md text-center col-span-2 md:col-span-1">
-                <h3 class="text-lg font-semibold text-gray-700 mb-2">Season Total</h3>
-                <p class="text-3xl font-bold text-blue-500"><span id="snow-total">0 cm</span></p>
+        <div class="container mx-auto px-4 pt-8">
+            <h2 class="section-title text-center mb-5" data-aos="fade-up">❄️ Snow Report</h2>
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-3 mb-8" data-aos="fade-up">
+                <div class="card snow-stat-card rounded-2xl p-4 text-center">
+                    <p class="stat-label">Overnight</p>
+                    <p class="stat-value"><span id="snow-overnight">0 cm</span></p>
+                </div>
+                <div class="card snow-stat-card rounded-2xl p-4 text-center">
+                    <p class="stat-label">Last 24h</p>
+                    <p class="stat-value"><span id="snow-24hr">0 cm</span></p>
+                </div>
+                <div class="card snow-stat-card rounded-2xl p-4 text-center">
+                    <p class="stat-label">Last 48h</p>
+                    <p class="stat-value"><span id="snow-48hr">0 cm</span></p>
+                </div>
+                <div class="card snow-stat-card rounded-2xl p-4 text-center">
+                    <p class="stat-label">Last Week</p>
+                    <p class="stat-value"><span id="snow-week">0 cm</span></p>
+                </div>
+                <div class="card snow-stat-card rounded-2xl p-4 text-center col-span-2 md:col-span-1">
+                    <p class="stat-label">Season Total</p>
+                    <p class="stat-value season-total"><span id="snow-total">0 cm</span></p>
+                </div>
             </div>
         </div>
 
+        <!-- ★ PARALLAX BREAK 2 — Powder -->
+        <div class="parallax-break parallax-powder" data-aos="fade-in">
+            <div class="parallax-overlay"></div>
+            <div class="parallax-content">
+                <p class="parallax-eyebrow">Conditions Report</p>
+                <h2 class="parallax-headline">CHARGE THE MOUNTAIN</h2>
+            </div>
+            <div class="mountain-silhouette silhouette-powder"></div>
+        </div>
+
         <!-- Weather Forecast -->
-        <div class="mb-6" data-aos="fade-up">
-            <h2 class="text-xl text-center font-bold text-gray-800 mb-4">6-Day Forecast</h2>
-            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-                <div class="weather-card bg-white p-4 rounded-xl shadow-md text-center">
-                    <p class="font-semibold text-gray-700">Today</p>
+        <div class="container mx-auto px-4 pt-8 mb-6" data-aos="fade-up">
+            <h2 class="section-title text-center mb-5">⛅ 6-Day Forecast</h2>
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+                <div class="card forecast-card p-4 rounded-2xl text-center">
+                    <p class="forecast-day">Today</p>
                     <img id="forecast-day-1-icon" src="" alt="" class="w-12 h-12 mx-auto my-2">
-                    <p id="forecast-day-1-summary" class="text-gray-600">Unknown</p>
-                    <p id="forecast-day-1-temp" class="font-bold text-gray-800">X° / x°</p>
-                    <p id="forecast-day-1-precip" class="text-sm text-gray-500">X% precip</p>
+                    <p id="forecast-day-1-summary" class="forecast-summary">--</p>
+                    <p id="forecast-day-1-temp" class="forecast-temp">--° / --°</p>
+                    <p id="forecast-day-1-precip" class="forecast-precip">-- precip</p>
                 </div>
-                <div class="weather-card bg-white p-4 rounded-xl shadow-md text-center">
-                    <p class="font-semibold text-gray-700">Tomorrow</p>
+                <div class="card forecast-card p-4 rounded-2xl text-center">
+                    <p class="forecast-day">Tomorrow</p>
                     <img id="forecast-day-2-icon" src="" alt="" class="w-12 h-12 mx-auto my-2">
-                    <p id="forecast-day-2-summary" class="text-gray-600">Unknown</p>
-                    <p id="forecast-day-2-temp" class="font-bold text-gray-800">X° / x°</p>
-                    <p id="forecast-day-2-precip" class="text-sm text-gray-500">X% precip</p>
+                    <p id="forecast-day-2-summary" class="forecast-summary">--</p>
+                    <p id="forecast-day-2-temp" class="forecast-temp">--° / --°</p>
+                    <p id="forecast-day-2-precip" class="forecast-precip">-- precip</p>
                 </div>
-                <div class="weather-card bg-white p-4 rounded-xl shadow-md text-center">
-                    <p id="forecast-day-3-weekday" class="font-semibold text-gray-700">Unknown</p>
+                <div class="card forecast-card p-4 rounded-2xl text-center">
+                    <p id="forecast-day-3-weekday" class="forecast-day">--</p>
                     <img id="forecast-day-3-icon" src="" alt="" class="w-12 h-12 mx-auto my-2">
-                    <p id="forecast-day-3-summary" class="text-gray-600">Unknown</p>
-                    <p id="forecast-day-3-temp" class="font-bold text-gray-800">X° / x°</p>
-                    <p id="forecast-day-3-precip" class="text-sm text-gray-500">X% precip</p>
+                    <p id="forecast-day-3-summary" class="forecast-summary">--</p>
+                    <p id="forecast-day-3-temp" class="forecast-temp">--° / --°</p>
+                    <p id="forecast-day-3-precip" class="forecast-precip">-- precip</p>
                 </div>
-                <div class="weather-card bg-white p-4 rounded-xl shadow-md text-center">
-                    <p id="forecast-day-4-weekday" class="font-semibold text-gray-700">Unknown</p>
+                <div class="card forecast-card p-4 rounded-2xl text-center">
+                    <p id="forecast-day-4-weekday" class="forecast-day">--</p>
                     <img id="forecast-day-4-icon" src="" alt="" class="w-12 h-12 mx-auto my-2">
-                    <p id="forecast-day-4-summary" class="text-gray-600">Unknown</p>
-                    <p id="forecast-day-4-temp" class="font-bold text-gray-800">X° / x°</p>
-                    <p id="forecast-day-4-precip" class="text-sm text-gray-500">X% precip</p>
+                    <p id="forecast-day-4-summary" class="forecast-summary">--</p>
+                    <p id="forecast-day-4-temp" class="forecast-temp">--° / --°</p>
+                    <p id="forecast-day-4-precip" class="forecast-precip">-- precip</p>
                 </div>
-                <div class="weather-card bg-white p-4 rounded-xl shadow-md text-center">
-                    <p id="forecast-day-5-weekday" class="font-semibold text-gray-700">Unknown</p>
+                <div class="card forecast-card p-4 rounded-2xl text-center">
+                    <p id="forecast-day-5-weekday" class="forecast-day">--</p>
                     <img id="forecast-day-5-icon" src="" alt="" class="w-12 h-12 mx-auto my-2">
-                    <p id="forecast-day-5-summary" class="text-gray-600">Unknown</p>
-                    <p id="forecast-day-5-temp" class="font-bold text-gray-800">X° / x°</p>
-                    <p id="forecast-day-5-precip" class="text-sm text-gray-500">X% precip</p>
+                    <p id="forecast-day-5-summary" class="forecast-summary">--</p>
+                    <p id="forecast-day-5-temp" class="forecast-temp">--° / --°</p>
+                    <p id="forecast-day-5-precip" class="forecast-precip">-- precip</p>
                 </div>
-                <div class="weather-card bg-white p-4 rounded-xl shadow-md text-center">
-                    <p id="forecast-day-6-weekday" class="font-semibold text-gray-700">Unknown</p>
+                <div class="card forecast-card p-4 rounded-2xl text-center">
+                    <p id="forecast-day-6-weekday" class="forecast-day">--</p>
                     <img id="forecast-day-6-icon" src="" alt="" class="w-12 h-12 mx-auto my-2">
-                    <p id="forecast-day-6-summary" class="text-gray-600">Unknown</p>
-                    <p id="forecast-day-6-temp" class="font-bold text-gray-800">X° / x°</p>
-                    <p id="forecast-day-6-precip" class="text-sm text-gray-500">X% precip</p>
+                    <p id="forecast-day-6-summary" class="forecast-summary">--</p>
+                    <p id="forecast-day-6-temp" class="forecast-temp">--° / --°</p>
+                    <p id="forecast-day-6-precip" class="forecast-precip">-- precip</p>
                 </div>
             </div>
         </div>
 
         <!-- Video Section -->
-        <div class="mb-6" data-aos="fade-up">
-            <h2 id="carousel-title" class="text-xl text-center font-bold text-gray-800 mb-4">Mountain View</h2>
-            <div class="relative video-container rounded-xl overflow-hidden shadow-lg">
-                <iframe id="carousel-video" src="https://www.youtube.com/embed/OSKgIDnBwwQ" frameborder="0"
-                    allowfullscreen></iframe>
-                <button id="carousel-left"
-                    class="absolute top-1/2 left-2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full">
+        <div class="container mx-auto px-4 mb-6" data-aos="fade-up">
+            <h2 id="carousel-title" class="section-title text-center mb-4">Mountain View</h2>
+            <div class="relative video-container rounded-2xl overflow-hidden">
+                <iframe id="carousel-video" src="https://www.youtube.com/embed/OSKgIDnBwwQ"
+                    frameborder="0" allowfullscreen></iframe>
+                <button id="carousel-left" class="carousel-btn" style="left: 0.75rem;" aria-label="Previous camera">
                     <i data-feather="chevron-left"></i>
                 </button>
-                <button id="carousel-right"
-                    class="absolute top-1/2 right-2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full">
+                <button id="carousel-right" class="carousel-btn" style="right: 0.75rem;" aria-label="Next camera">
                     <i data-feather="chevron-right"></i>
                 </button>
             </div>
         </div>
 
+        <!-- ★ PARALLAX BREAK 3 — Sunset -->
+        <div class="parallax-break parallax-sunset" data-aos="fade-in">
+            <div class="parallax-overlay"></div>
+            <div class="parallax-content">
+                <p class="parallax-eyebrow">See You Out There</p>
+                <h2 class="parallax-headline">SEE YOU ON THE SLOPES</h2>
+            </div>
+            <div class="mountain-silhouette silhouette-sunset"></div>
+        </div>
+
         <!-- Season Dates -->
-        <div class="mb-4 bg-white rounded-xl shadow-md overflow-hidden" data-aos="fade-up">
-            <div class="p-6">
-                <h2 class="text-xl text-center font-bold text-gray-800 mb-4">Season Dates</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div class="bg-blue-50 p-4 rounded-lg">
-                        <h3 class="font-bold text-blue-800 mb-2 text-center">Opening Day</h3>
-                        <p id="opening-date-footer" class="text-blue-500 text-center">December 20, 2025</p>
-                    </div>
-                    <div class="bg-blue-50 p-4 rounded-lg">
-                        <h3 class="font-bold text-blue-800 mb-2 text-center">Closing Day</h3>
-                        <p id="closing-date-footer" class="text-blue-500 text-center">April 28, 2026</p>
+        <div class="container mx-auto px-4 pt-8">
+            <div class="card rounded-2xl overflow-hidden mb-4" data-aos="fade-up">
+                <div class="p-6 text-center">
+                    <h2 class="section-title mb-5">Season Dates</h2>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="season-date-card rounded-xl p-4">
+                            <p class="season-date-label mb-1">Opening Day</p>
+                            <p id="opening-date-footer" class="season-date-value">December 20, 2025</p>
+                        </div>
+                        <div class="season-date-card rounded-xl p-4">
+                            <p class="season-date-label mb-1">Closing Day</p>
+                            <p id="closing-date-footer" class="season-date-value">April 28, 2026</p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+
     </main>
 </body>
 

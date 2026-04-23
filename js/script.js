@@ -80,8 +80,7 @@ const updateUI = () => {
     document.getElementById('current-weather-wind').textContent = "Wind: " + cypressDetails.currentWeather.wind + ' km/h';
     document.getElementById('uphill-status').textContent = cypressDetails.operations.uphillStatus;
     if (cypressDetails.operations.uphillStatus == "Open") {
-        document.getElementById('uphill-status-banner').classList.remove('bg-red-100', 'text-red-800');
-        document.getElementById('uphill-status-banner').classList.add('bg-green-100', 'text-green-800');
+        document.getElementById('uphill-status-banner').classList.add('uphill-open');
     }
 
     // Runs Open
@@ -90,11 +89,11 @@ const updateUI = () => {
     document.getElementById('open-run-percentage-bar').style.width = cypressDetails.runsOpenPercent + '%';
 
     // Snow Stats
-    document.getElementById('snow-overnight').textContent = cypressDetails.snowMidMountain.overnight > 300 ? `${cypressDetails.snowMidMountain.overnight / 100} mts` : `${cypressDetails.snowMidMountain.overnight} cm`;
-    document.getElementById('snow-24hr').textContent = cypressDetails.snowMidMountain.last24 > 300 ? `${cypressDetails.snowMidMountain.last24 / 100} mts` : `${cypressDetails.snowMidMountain.last24} cm`;
-    document.getElementById('snow-48hr').textContent = cypressDetails.snowMidMountain.last48 > 300 ? `${cypressDetails.snowMidMountain.last48 / 100} mts` : `${cypressDetails.snowMidMountain.last48} cm`;
-    document.getElementById('snow-week').textContent = cypressDetails.snowMidMountain.lastWeek > 300 ? `${cypressDetails.snowMidMountain.lastWeek / 100} mts` : `${cypressDetails.snowMidMountain.lastWeek} cm`;
-    document.getElementById('snow-total').textContent = cypressDetails.snowMidMountain.seasonTotal > 300 ? `${cypressDetails.snowMidMountain.seasonTotal / 100} mts` : `${cypressDetails.snowMidMountain.seasonTotal} cm`;
+    document.getElementById('snow-overnight').textContent = cypressDetails.snowMidMountain.overnight > 300 ? `${(cypressDetails.snowMidMountain.overnight / 100).toFixed(1)} mt` : `${cypressDetails.snowMidMountain.overnight} cm`;
+    document.getElementById('snow-24hr').textContent = cypressDetails.snowMidMountain.last24 > 300 ? `${(cypressDetails.snowMidMountain.last24 / 100).toFixed(1)} mt` : `${cypressDetails.snowMidMountain.last24} cm`;
+    document.getElementById('snow-48hr').textContent = cypressDetails.snowMidMountain.last48 > 300 ? `${(cypressDetails.snowMidMountain.last48 / 100).toFixed(1)} mt` : `${cypressDetails.snowMidMountain.last48} cm`;
+    document.getElementById('snow-week').textContent = cypressDetails.snowMidMountain.lastWeek > 300 ? `${(cypressDetails.snowMidMountain.lastWeek / 100).toFixed(1)} mt` : `${cypressDetails.snowMidMountain.lastWeek} cm`;
+    document.getElementById('snow-total').textContent = cypressDetails.snowMidMountain.seasonTotal > 300 ? `${(cypressDetails.snowMidMountain.seasonTotal / 100).toFixed(1)} mt` : `${cypressDetails.snowMidMountain.seasonTotal} cm`;
 
     // Forecast
     for (let i = 0; i < 6; i++) {

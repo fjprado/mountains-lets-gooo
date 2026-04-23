@@ -1,8 +1,43 @@
+/* ============================================================
+   BORAAA PRA MONTANHAAA — Bright Snowboarder Theme
+   ============================================================ */
+
+:root {
+    --blue-vivid:   #0284c7;
+    --blue-bright:  #0ea5e9;
+    --blue-light:   #bae6fd;
+    --cyan:         #06b6d4;
+    --orange:       #f97316;
+    --green:        #10b981;
+    --body-bg:      #e0f2fe;
+    --card-bg:      #ffffff;
+    --text-dark:    #0f172a;
+    --text-mid:     #334155;
+    --text-muted:   #64748b;
+    --border:       #e2e8f0;
+    --shadow:       0 4px 24px rgba(2, 132, 199, 0.1);
+    --shadow-hover: 0 12px 36px rgba(2, 132, 199, 0.18);
+}
+
+/* ---- Base ---- */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--body-bg);
+    background-image: linear-gradient(180deg, #bae6fd 0%, #e0f2fe 15%, #f0f9ff 50%, #e0f2fe 85%, #bae6fd 100%);
+    min-height: 100vh;
+    color: var(--text-dark);
+    font-family: 'Inter', sans-serif;
+}
+
+/* ---- Loading / Fail Screens ---- */
 #loading-screen, #fail-screen {
     position: fixed;
     width: 100%;
     height: 100%;
-    background: linear-gradient(135deg, #0e1f3f 0%, #17366b 100%);
+    background: linear-gradient(135deg, #0c4a6e 0%, #0284c7 60%, #38bdf8 100%);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -12,29 +47,22 @@
 }
 
 .loading-spinner {
-    width: 50px;
-    height: 50px;
-    border: 5px solid rgba(255, 255, 255, 0.3);
+    width: 56px;
+    height: 56px;
+    border: 4px solid rgba(255, 255, 255, 0.25);
     border-radius: 50%;
-    border-top-color: white;
+    border-top-color: #ffffff;
     animation: spin 1s ease-in-out infinite;
-    margin-bottom: 0.5rem;
+    margin-bottom: 1.5rem;
 }
 
 @keyframes spin {
-    to {
-        transform: rotate(360deg);
-    }
+    to { transform: rotate(360deg); }
 }
 
 @keyframes spin-refresh {
-    0% {
-        transform: rotate(0deg);
-    }
-
-    100% {
-        transform: rotate(360deg);
-    }
+    0%   { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
 
 .animate-spin {
@@ -42,39 +70,297 @@
 }
 
 .loading-text {
-    color: white;
-    font-size: 1.5rem;
-    font-weight: bold;
+    color: #ffffff;
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+.fail-sub {
+    color: rgba(255,255,255,0.7);
+    font-size: 0.875rem;
+    font-weight: 400;
+    text-transform: none;
+    letter-spacing: 0;
     margin-top: 0.5rem;
+    text-align: center;
 }
 
-.feather-refresh-cw {
-    width: 16px;
-    height: 16px;
+/* ---- Header ---- */
+.site-header {
+    background: linear-gradient(135deg, #0c4a6e 0%, #0284c7 60%, #0ea5e9 100%);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 20px rgba(2, 132, 199, 0.4);
 }
 
-.weather-card {
-    transition: all 0.3s ease;
+.header-mountain {
+    font-size: 2.25rem;
+    line-height: 1;
 }
 
-.weather-card:hover {
+.header-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(1.5rem, 5vw, 2.25rem);
+    letter-spacing: 0.06em;
+    line-height: 1;
+    color: #ffffff;
+}
+
+.header-subtitle {
+    font-size: 0.68rem;
+    color: rgba(255, 255, 255, 0.65);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-top: 0.1rem;
+}
+
+.last-updated-text {
+    font-size: 0.7rem;
+    color: rgba(255, 255, 255, 0.7);
+    white-space: nowrap;
+}
+
+.refresh-btn {
+    padding: 0.5rem;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    color: #ffffff;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.refresh-btn:hover {
+    background: rgba(255, 255, 255, 0.35);
+    box-shadow: 0 0 12px rgba(255, 255, 255, 0.3);
+}
+
+.feather-refresh-cw { width: 16px; height: 16px; }
+
+/* ---- Base Card ---- */
+.card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+}
+
+/* ---- Section Titles ---- */
+.section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(1.5rem, 4vw, 2rem);
+    letter-spacing: 0.08em;
+    color: var(--text-dark);
+}
+
+.section-label {
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--text-muted);
+}
+
+/* ---- Countdown Card ---- */
+.countdown-card {
+    background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%);
+    border-color: #fed7aa;
+}
+
+.countdown-number {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(4rem, 15vw, 7rem);
+    line-height: 1;
+    color: var(--orange);
+}
+
+/* ---- Open Now Card ---- */
+.open-now-card {
+    background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+    border-color: #a7f3d0;
+}
+
+.open-pulse {
+    width: 10px;
+    height: 10px;
+    background: var(--green);
+    border-radius: 50%;
+    flex-shrink: 0;
+    animation: pulse-ring 1.8s ease-out infinite;
+}
+
+@keyframes pulse-ring {
+    0%   { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.6); }
+    70%  { box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+}
+
+.open-badge {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    letter-spacing: 0.12em;
+    color: #065f46;
+}
+
+.hours-divider {
+    width: 1px;
+    height: 36px;
+    background: #a7f3d0;
+}
+
+.hours-label {
+    font-size: 0.62rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--text-muted);
+    margin-bottom: 0.15rem;
+}
+
+.hours-value {
+    font-weight: 700;
+    font-size: 1rem;
+    color: #065f46;
+}
+
+/* ---- Current Conditions ---- */
+.temp-display {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3rem, 10vw, 4rem);
+    line-height: 1;
+    color: var(--blue-vivid);
+}
+
+/* Inline uphill status inside operation-hours card */
+.uphill-banner-inline {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #991b1b;
+}
+
+.uphill-banner-inline .hours-label { color: #991b1b; opacity: 0.7; }
+.uphill-banner-inline .hours-value { color: #991b1b; }
+
+.uphill-banner-inline.uphill-open { color: #065f46; }
+.uphill-banner-inline.uphill-open .hours-label { color: #065f46; opacity: 0.7; }
+.uphill-banner-inline.uphill-open .hours-value { color: #065f46; }
+
+/* ---- Runs Bar ---- */
+.runs-percentage-big {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 0.2rem;
+}
+
+.runs-number {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(4.5rem, 14vw, 6rem);
+    line-height: 1;
+    color: var(--blue-vivid);
+}
+
+.runs-percent-sign {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.25rem;
+    color: var(--text-muted);
+    margin-top: 0.6rem;
+    line-height: 1;
+}
+
+.runs-bar-track {
+    background: #e2e8f0;
+}
+
+.runs-bar-fill {
+    background: linear-gradient(90deg, var(--blue-vivid) 0%, var(--blue-bright) 100%);
+    box-shadow: 0 0 8px rgba(14, 165, 233, 0.4);
+    transition: width 1s ease;
+}
+
+/* ---- Snow Stats ---- */
+.stat-label {
+    font-size: 0.62rem;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--text-muted);
+    margin-bottom: 0.4rem;
+}
+
+.stat-value {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2rem, 7vw, 2.75rem);
+    line-height: 1;
+    color: var(--blue-vivid);
+    white-space: nowrap;
+}
+
+.snow-stat-card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.snow-stat-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--shadow-hover);
 }
 
-.snow-stats {
-    background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%);
+.season-total {
+    color: var(--cyan);
 }
 
-.countdown {
-    background: linear-gradient(135deg, #ffcdd2 0%, #ef9a9a 100%);
+/* ---- Forecast Cards ---- */
+.forecast-card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
+.forecast-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-hover);
+}
+
+.forecast-day {
+    font-weight: 700;
+    font-size: 0.78rem;
+    color: var(--text-dark);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.forecast-summary {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    margin-bottom: 0.2rem;
+    line-height: 1.3;
+}
+
+.forecast-temp {
+    font-weight: 700;
+    color: var(--text-dark);
+    font-size: 0.9rem;
+}
+
+.forecast-precip {
+    font-size: 0.68rem;
+    color: var(--blue-bright);
+    font-weight: 600;
+    margin-top: 0.2rem;
+}
+
+/* ---- Video ---- */
 .video-container {
     position: relative;
     padding-bottom: 56.25%;
     height: 0;
     overflow: hidden;
+    border: 2px solid var(--blue-light);
+    box-shadow: var(--shadow-hover);
 }
 
 .video-container iframe {
@@ -83,4 +369,287 @@
     left: 0;
     width: 100%;
     height: 100%;
+}
+
+.carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid var(--border);
+    color: var(--blue-vivid);
+    padding: 0.6rem;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+}
+
+.carousel-btn:hover {
+    background: var(--blue-vivid);
+    color: white;
+    box-shadow: 0 4px 20px rgba(2, 132, 199, 0.4);
+}
+
+/* ---- Season Dates ---- */
+.season-date-card {
+    background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+    border: 1px solid #bae6fd;
+    text-align: center;
+}
+
+.season-date-label {
+    font-size: 0.62rem;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--text-muted);
+}
+
+.season-date-value {
+    font-weight: 700;
+    font-size: 1.05rem;
+    color: var(--blue-vivid);
+}
+
+/* ============================================================
+   PARALLAX BREAKS — Mountain Scenes with Snowboarder Silhouettes
+   ============================================================
+
+   To use real snowboarder photos, replace the background-image
+   gradient on each .parallax-dawn / .parallax-powder / .parallax-sunset
+   with: url('./images/your-photo.jpg')
+   ============================================================ */
+
+.parallax-break {
+    position: relative;
+    min-height: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /* CSS parallax via fixed background — degrades gracefully on mobile */
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
+}
+
+/* Dawn / Sunrise — Electric blue to warm orange sky */
+.parallax-dawn {
+    background-image:
+        linear-gradient(160deg,
+            #ff9a3c 0%,
+            #f97316 10%,
+            #fb923c 25%,
+            #0ea5e9 55%,
+            #0284c7 75%,
+            #0c4a6e 100%
+        );
+}
+
+/* Powder — Vivid midday blue sky */
+.parallax-powder {
+    background-image:
+        linear-gradient(180deg,
+            #0c4a6e 0%,
+            #0284c7 30%,
+            #0ea5e9 60%,
+            #38bdf8 80%,
+            #bae6fd 100%
+        );
+}
+
+/* Sunset — warm dusk tones */
+.parallax-sunset {
+    background-image:
+        linear-gradient(160deg,
+            #7c3aed 0%,
+            #c026d3 20%,
+            #f97316 50%,
+            #fbbf24 75%,
+            #fef9c3 100%
+        );
+}
+
+/* Semi-transparent overlay to ensure text legibility */
+.parallax-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.25);
+}
+
+/* Text content inside parallax */
+.parallax-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    padding: 0 1rem;
+    /* Lift text above mountain silhouette at bottom */
+    margin-bottom: 80px;
+}
+
+.parallax-eyebrow {
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.25em;
+    color: rgba(255, 255, 255, 0.75);
+    margin-bottom: 0.4rem;
+}
+
+.parallax-headline {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.5rem, 10vw, 5rem);
+    letter-spacing: 0.08em;
+    color: #ffffff;
+    text-shadow: 0 2px 20px rgba(0, 0, 0, 0.4);
+    line-height: 1;
+}
+
+/* Mountain silhouette at the bottom of each parallax section */
+.mountain-silhouette {
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    right: 0;
+    height: 122px;
+    z-index: 1;
+}
+
+/* Dawn silhouette — jagged snowy peaks */
+.silhouette-dawn {
+    background: #e0f2fe;
+    clip-path: polygon(
+        0% 100%,
+        0% 75%,
+        4% 55%,
+        9% 70%,
+        14% 30%,
+        20% 65%,
+        26% 45%,
+        32% 10%,
+        38% 50%,
+        44% 20%,
+        50% 60%,
+        56% 35%,
+        62% 55%,
+        68% 15%,
+        74% 45%,
+        80% 25%,
+        86% 50%,
+        91% 65%,
+        96% 40%,
+        100% 55%,
+        100% 100%
+    );
+}
+
+/* Powder silhouette — broader, lower peaks */
+.silhouette-powder {
+    background: #f0f9ff;
+    clip-path: polygon(
+        0% 100%,
+        0% 80%,
+        6% 60%,
+        12% 75%,
+        18% 35%,
+        24% 55%,
+        30% 20%,
+        37% 55%,
+        43% 30%,
+        50% 65%,
+        57% 40%,
+        63% 55%,
+        70% 15%,
+        76% 45%,
+        82% 30%,
+        88% 55%,
+        93% 70%,
+        97% 50%,
+        100% 60%,
+        100% 100%
+    );
+}
+
+/* Sunset silhouette — dramatic steep peaks */
+.silhouette-sunset {
+    background: #e0f2fe;
+    clip-path: polygon(
+        0% 100%,
+        0% 85%,
+        5% 65%,
+        10% 80%,
+        17% 25%,
+        23% 60%,
+        28% 40%,
+        34% 55%,
+        40% 5%,
+        46% 45%,
+        52% 25%,
+        58% 50%,
+        64% 35%,
+        71% 60%,
+        77% 20%,
+        83% 50%,
+        89% 65%,
+        94% 45%,
+        100% 60%,
+        100% 100%
+    );
+}
+
+/* Snowboarder silhouette figures (CSS shapes) */
+.silhouette-dawn::before,
+.silhouette-powder::before,
+.silhouette-sunset::before {
+    content: '🏂';
+    position: absolute;
+    font-size: 3rem;
+    top: -4rem;
+    left: 50%;
+    transform: translateX(-50%);
+    filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.4));
+    animation: boarder-float 3s ease-in-out infinite;
+}
+
+.silhouette-powder::before {
+    left: 35%;
+    font-size: 2.5rem;
+    animation-delay: 0.5s;
+}
+
+.silhouette-sunset::before {
+    left: 65%;
+    font-size: 3.5rem;
+    animation-delay: 1s;
+}
+
+@keyframes boarder-float {
+    0%, 100% { transform: translateX(-50%) translateY(0) rotate(-5deg); }
+    50%       { transform: translateX(-50%) translateY(-8px) rotate(5deg); }
+}
+
+/* ---- Mobile: disable fixed attachment (iOS bug) ---- */
+@media (max-width: 768px) {
+    .parallax-break {
+        background-attachment: scroll;
+        min-height: 220px;
+    }
+
+    .parallax-content {
+        margin-bottom: 60px;
+    }
+
+    .mountain-silhouette {
+        height: 80px;
+    }
+
+    .silhouette-dawn::before,
+    .silhouette-powder::before,
+    .silhouette-sunset::before {
+        font-size: 2.25rem;
+        top: -3rem;
+    }
 }
