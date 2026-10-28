@@ -1,5 +1,5 @@
 /* ============================================================
-   BORAAA PRA MONTANHAAA — Bright Snowboarder Theme
+   MOUNTAINS, LET'S GO — Bright Snowboarder Theme
    ============================================================ */
 
 :root {
@@ -179,6 +179,35 @@ body {
     font-size: clamp(4rem, 15vw, 7rem);
     line-height: 1;
     color: var(--orange);
+}
+
+/* ---- Run Simulator Card ---- */
+.ride-card {
+    display: flex;
+    text-decoration: none;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.ride-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(15, 23, 42, 0.12);
+}
+
+.ride-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 9999px;
+    background: var(--orange);
+    color: #fff;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.ride-btn svg {
+    width: 1rem;
+    height: 1rem;
 }
 
 /* ---- Open Now Card ---- */

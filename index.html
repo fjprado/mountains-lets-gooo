@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BORAAA PRA MONTANHAAA</title>
+    <title>MOUNTAINS, LET'S GO</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -27,7 +27,7 @@
                 <div class="flex items-center gap-3">
                     <span class="header-mountain">🏂</span>
                     <div>
-                        <h1 class="header-title">BORAAA PRA MONTANHAAA</h1>
+                        <h1 class="header-title">MOUNTAINS, LET'S GO</h1>
                         <p class="header-subtitle">Cypress Mountain — Live Conditions</p>
                     </div>
                 </div>
@@ -59,13 +59,27 @@
         <!-- Status Section -->
         <div class="container mx-auto px-4 pt-6">
 
+            <!-- Run Simulator Shortcut -->
+            <a href="https://bonvo.ski/en/ride/cypress-mountain" target="_blank" rel="noopener noreferrer"
+                class="card ride-card px-6 py-4 rounded-2xl mb-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left"
+                data-aos="fade-up">
+                <div>
+                    <p class="section-label mb-1">Preview the Slopes</p>
+                    <p class="text-slate-600 text-sm">Simulate a run down Cypress before you head up.</p>
+                </div>
+                <span class="ride-btn">
+                    Ride the Runs
+                    <i data-feather="external-link"></i>
+                </span>
+            </a>
+
             <!-- Countdown to Opening -->
-            <div id="countdown" class="card countdown-card p-6 rounded-2xl mb-6 text-center"
+            <div id="countdown" class="card countdown-card p-6 rounded-2xl mb-6 text-center flex-col items-center"
                 style="display: none;" data-aos="fade-up">
-                <p class="section-label mb-2">Season Hasn't Started Yet</p>
-                <span id="opening-date" class="text-slate-500 text-sm block mb-3">Opening date pending</span>
+                <p class="section-label mb-3">Season Hasn't Started Yet</p>
                 <p id="days-for-opening" class="countdown-number">X</p>
                 <p class="text-slate-500 text-base uppercase tracking-widest mt-1">days to go</p>
+                <p class="text-slate-500 text-sm mt-3">Opening day: <span id="opening-date" class="font-semibold text-slate-700">Opening date pending</span></p>
             </div>
 
             <!-- Operation Hours -->
